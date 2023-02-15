@@ -3,6 +3,7 @@ import * as core from "@actions/core"
 import {IsPost} from "./state-helper";
 import {db_init, db_release} from "./database-helper";
 import {execute} from "./exec-helper";
+import {GIT_LOG} from "./consts";
 
 async function run() {
     // inputs

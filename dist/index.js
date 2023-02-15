@@ -1,6 +1,19 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 4831:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GIT_LOG = exports.ICON_MAP_URL = void 0;
+exports.ICON_MAP_URL = "https://raw.githubusercontent.com/LibChecker/LibChecker-Rules-Bundle/main/library/src/main/java/com/absinthe/rulesbundle/IconResMap.kt";
+exports.GIT_LOG = 'git log --pretty=format:"" --name-only -1';
+
+
+/***/ }),
+
 /***/ 9348:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -129,10 +142,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.map_init = exports.MAP = void 0;
 const net_helper_1 = __nccwpck_require__(4930);
+const consts_1 = __nccwpck_require__(4831);
 exports.MAP = new Map();
 function map_init() {
     return __awaiter(this, void 0, void 0, function* () {
-        let orig_map = yield (0, net_helper_1.http_get)(ICON_MAP_URL);
+        let orig_map = yield (0, net_helper_1.http_get)(consts_1.ICON_MAP_URL);
         orig_map
             .split("put(-1, R.drawable.ic_sdk_placeholder)")[1]
             .split("}")[0]
@@ -195,6 +209,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const state_helper_1 = __nccwpck_require__(8647);
 const database_helper_1 = __nccwpck_require__(9348);
 const exec_helper_1 = __nccwpck_require__(3422);
+const consts_1 = __nccwpck_require__(4831);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         // inputs
@@ -204,7 +219,8 @@ function run() {
         yield (0, icon_map_helper_1.map_init)();
         (0, database_helper_1.db_init)(db_path);
         // main
-        let list = (0, exec_helper_1.execute)(GIT_LOG);
+        let list = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
+        core.info(list);
     });
 }
 function cleanup() {

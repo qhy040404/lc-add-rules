@@ -1,4 +1,5 @@
 import {http_get} from "./net-helper";
+import {ICON_MAP_URL} from "./consts";
 
 export var MAP: Map<number, string> = new Map()
 
