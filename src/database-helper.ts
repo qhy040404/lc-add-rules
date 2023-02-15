@@ -1,4 +1,4 @@
-import * as sqlite from "sqlite-sync"
+const sqlite = require('sqlite-sync');
 
 export function db_init(path: string) {
     sqlite.connect(path)
