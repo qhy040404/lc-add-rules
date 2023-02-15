@@ -1,0 +1,19 @@
+import * as sqlite from "sqlite-sync"
+
+export function db_init(path: string) {
+    sqlite.connect(path)
+}
+
+export function db_release() {
+    sqlite.close()
+}
+
+export function insert(name: string, label: string, type: number, iconIndex: number) {
+    let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName) VALUES (null, ${name}, ${label}, ${type}, ${iconIndex}, 0, null)`
+    sqlite.run(insStr)
+}
+
+export function select(name: string) {
+    let selectStr = `SELECT * FROM rules_table WHERE name='${name}'`
+    let rows = sqlite.run(selectStr)
+}

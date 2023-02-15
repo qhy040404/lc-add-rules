@@ -1,0 +1,31 @@
+import {map_init} from "./icon-map-helper";
+import * as core from "@actions/core"
+import {IsPost} from "./state-helper";
+import {db_init, db_release} from "./database-helper";
+import {execute} from "./exec-helper";
+
+async function run() {
+    // inputs
+    let db_path = process.env.GITHUB_WORKSPACE + "/" + core.getInput("db_path")
+    let info_path = process.env.GITHUB_WORKSPACE + "/" + core.getInput("info_path")
+
+    // init
+    await map_init()
+    db_init(db_path)
+
+    // main
+    let list = await execute(GIT_LOG)
+    core.info(list)
+}
+
+async function cleanup() {
+    db_release()
+}
+
+if (!IsPost) {
+    // noinspection JSIgnoredPromiseFromCall
+    run()
+} else {
+    // noinspection JSIgnoredPromiseFromCall
+    cleanup()
+}

@@ -1,0 +1,17 @@
+name: 'LibChecker rules auto-generate'
+description: "A GitHub action to add rules to database"
+author: 'qhy040404'
+
+inputs:
+  db_path:
+    description: 'database filepath'
+    required: true
+    default: ''
+  info_path:
+    description: 'info filepath'
+    required: true
+    default: ''
+
+runs:
+  using: node16
+  main: dist/index.js

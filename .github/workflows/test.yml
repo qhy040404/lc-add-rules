@@ -1,0 +1,16 @@
+name: Test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+      - uses: qhy040404/lc-add-rules@master
+        with:
+          db_path: rules.db
+          info_path: v3
