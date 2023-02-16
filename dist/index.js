@@ -32,8 +32,7 @@ function db_release() {
 exports.db_release = db_release;
 function insert(name, label, type, iconIndex) {
     let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName) VALUES (null, '${name}', '${label}', ${type}, ${iconIndex}, 0, null)`;
-    let id = sqlite.run(insStr);
-    return id;
+    return sqlite.run(insStr);
 }
 exports.insert = insert;
 function exists(name) {
@@ -41,7 +40,7 @@ function exists(name) {
     let rows = sqlite.run(selectStr);
     console.log(name);
     console.log(rows);
-    return rows.length == 0;
+    return rows.length != 0;
 }
 exports.exists = exists;
 
