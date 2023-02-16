@@ -18,6 +18,7 @@ async function run() {
     let changelist = await execute(GIT_LOG)
     let regex = /^.*-libs\/.*\.json$/
     let list = changelist.filter((value, index, array) => regex.exec(value) != null)
+    list.forEach((value, index, array) => core.info(value))
 }
 
 async function cleanup() {

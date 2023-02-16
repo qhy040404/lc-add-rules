@@ -199,6 +199,7 @@ function run() {
         let changelist = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
         let regex = /^.*-libs\/.*\.json$/;
         let list = changelist.filter((value, index, array) => regex.exec(value) != null);
+        list.forEach((value, index, array) => core.info(value));
     });
 }
 function cleanup() {
