@@ -93,6 +93,7 @@ function execute(cmd) {
                 output += data.toString();
             }
         };
+        options.silent = true;
         yield exec.exec(cmd, undefined, options);
         return output.split("\n");
     });
@@ -199,7 +200,6 @@ function run() {
         let changelist = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
         let regex = /^.*-libs\/.*\.json$/;
         let list = changelist.filter((value, index, array) => regex.exec(value) != null);
-        list.forEach((value, index, array) => core.info(value));
     });
 }
 function cleanup() {

@@ -8,7 +8,8 @@ export async function execute(cmd:string): Promise<string[]> {
         stdout: (data: Buffer) => {
             output += data.toString();
         }
-    };
+    }
+    options.silent = true
 
     await exec.exec(cmd, undefined,options)
     return output.split("\n")
