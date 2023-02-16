@@ -304,8 +304,9 @@ function run() {
             if (!(0, database_helper_1.exists)(name)) {
                 let type = (0, lib_type_helper_1.get_type)(t[0]);
                 let data = JSON.parse(fs.readFileSync((0, path_helper_1.serialize_path)(value), 'utf8'));
+                let t_label = data.label;
                 core.info(`
-               new id: ${(0, database_helper_1.insert)(name, data.label, type, (0, icon_map_helper_1.get_icon_res)(name))}
+               new id: ${(0, database_helper_1.insert)(name, t_label.substring(0, t_label.lastIndexOf("(")), type, (0, icon_map_helper_1.get_icon_res)(name))}
                name:${name}
                `);
                 new_count++;

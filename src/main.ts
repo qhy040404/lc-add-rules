@@ -9,6 +9,7 @@ import {get_icon_res, map_init} from "./icon-map-helper";
 import {info_serialize, info_write} from "./info-helper";
 import {get_type} from "./lib-type-helper";
 import {serialize_path} from "./path-helper";
+import {rule} from "./json-obj";
 
 async function run() {
     // inputs
@@ -35,10 +36,11 @@ async function run() {
 
         if (!exists(name)) {
             let type = get_type(t[0])
-            let data = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
+            let data:rule = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
+            let t_label:string = data.label
             core.info(
                 `
-               new id: ${insert(name, data.label, type, get_icon_res(name))}
+               new id: ${insert(name, t_label.substring(0, t_label.lastIndexOf("(")), type, get_icon_res(name))}
                name:${name}
                `
             )

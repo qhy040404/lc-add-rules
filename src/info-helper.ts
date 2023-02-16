@@ -1,8 +1,9 @@
 import * as fs from 'fs-extra'
+import {information} from "./json-obj";
 
 export function info_serialize(path: string): number[] {
     let data = fs.readFileSync(path, 'utf8')
-    let json = JSON.parse(data)
+    let json:information = JSON.parse(data)
     return [json.version, json.count]
 }
 
