@@ -37,7 +37,7 @@ async function run() {
         if (!exists(name)) {
             let type = get_type(t[0])
             let data:rule = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
-            let t_label:string = data.label
+            let t_label = data.label
             core.info(
                 `
                new id: ${insert(name, t_label.substring(0, t_label.lastIndexOf("(")), type, get_icon_res(name))}
