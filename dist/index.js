@@ -20,7 +20,7 @@ exports.GIT_LOG = 'git log --pretty=format:"" --name-only -3';
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.qexists = exports.exists = exports.insert = exports.db_release = exports.db_init = void 0;
+exports.exists = exports.insert = exports.db_release = exports.db_init = void 0;
 const sqlite = __nccwpck_require__(4609);
 function db_init(path) {
     sqlite.connect(path);
@@ -38,15 +38,9 @@ exports.insert = insert;
 function exists(name) {
     let selectStr = `SELECT * FROM rules_table WHERE name = '${name}'`;
     let rows = sqlite.run(selectStr);
-    return rows != null;
+    return rows.length == 0;
 }
 exports.exists = exists;
-function qexists() {
-    let selectStr = `SELECT * FROM rules_table WHERE name = '123'`;
-    let rows = sqlite.run(selectStr);
-    console.log(rows);
-}
-exports.qexists = qexists;
 
 
 /***/ }),
@@ -319,7 +313,6 @@ function run() {
         core.info(new_count.toString());
         (0, info_helper_1.info_write)(info_path, info[0], info[1] + new_count);
         // exit
-        (0, database_helper_1.qexists)();
         (0, database_helper_1.db_release)();
     });
 }

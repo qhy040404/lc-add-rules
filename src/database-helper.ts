@@ -15,12 +15,6 @@ export function insert(name: string, label: string, type: number, iconIndex: num
 
 export function exists(name: string): boolean {
     let selectStr = `SELECT * FROM rules_table WHERE name = '${name}'`
-    let rows = sqlite.run(selectStr)
-    return rows != null
-}
-
-export function qexists() {
-    let selectStr = `SELECT * FROM rules_table WHERE name = '123'`
-    let rows = sqlite.run(selectStr)
-    console.log(rows)
+    let rows:any[] = sqlite.run(selectStr)
+    return rows.length == 0
 }

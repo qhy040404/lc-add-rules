@@ -3,7 +3,7 @@ import * as core from "@actions/core"
 import * as fs from "fs-extra";
 
 import {GIT_LOG} from "./consts";
-import {db_init, db_release, exists, insert, qexists} from "./database-helper";
+import {db_init, db_release, exists, insert} from "./database-helper";
 import {execute} from "./exec-helper";
 import {get_icon_res, map_init} from "./icon-map-helper";
 import {info_serialize, info_write} from "./info-helper";
@@ -53,7 +53,6 @@ async function run() {
     info_write(info_path, info[0], info[1] + new_count)
 
     // exit
-    qexists()
     db_release()
 }
 
