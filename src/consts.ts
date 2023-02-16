@@ -1,2 +1,2 @@
 export const ICON_MAP_URL = "https://raw.githubusercontent.com/LibChecker/LibChecker-Rules-Bundle/main/library/src/main/java/com/absinthe/rulesbundle/IconResMap.kt"
-export const GIT_LOG = 'git log --pretty=format:"" --name-only -3'
+export const GIT_LOG = 'git log --pretty=format:"" --name-only master..HEAD'
