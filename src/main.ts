@@ -30,6 +30,8 @@ async function run() {
         .filter((value, index, array) => regex.exec(value) != null)
         .filter((value, index, array) => !value.includes("regex"))
 
+    core.info(list.toString())
+
     list.forEach((value, index, array) => {
         let t = value.split("-libs/")
         let name = t[1].split(".json")[0]
