@@ -312,6 +312,7 @@ function run() {
                 new_count++;
             }
         });
+        core.info(new_count.toString());
         (0, info_helper_1.info_write)(info_path, info[0], info[1] + new_count);
         // exit
         (0, database_helper_1.db_release)();

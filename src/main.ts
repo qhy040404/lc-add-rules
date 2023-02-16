@@ -48,6 +48,7 @@ async function run() {
         }
     })
 
+    core.info(new_count.toString())
     info_write(info_path, info[0], info[1] + new_count)
 
     // exit
