@@ -38,8 +38,6 @@ exports.insert = insert;
 function exists(name) {
     let selectStr = `SELECT * FROM rules_table WHERE name = '${name}'`;
     let rows = sqlite.run(selectStr);
-    console.log(name);
-    console.log(rows);
     return rows.length != 0;
 }
 exports.exists = exists;

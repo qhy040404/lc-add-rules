@@ -16,7 +16,5 @@ export function insert(name: string, label: string, type: number, iconIndex: num
 export function exists(name: string): boolean {
     let selectStr = `SELECT * FROM rules_table WHERE name = '${name}'`
     let rows:any[] = sqlite.run(selectStr)
-    console.log(name)
-    console.log(rows)
     return rows.length != 0
 }
