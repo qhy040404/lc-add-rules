@@ -21,8 +21,11 @@ export async function map_init() {
 }
 
 export function get_icon_res(name: string): number {
-    name.split(".").forEach((value, index, array) => {
-        if (MAP.has(value)) return MAP.get(value)
-    })
+    for (let value in name.split(".")) {
+        if (MAP.has(value)) {
+            // @ts-ignore
+            return MAP.get(value)
+        }
+    }
     return -1
 }

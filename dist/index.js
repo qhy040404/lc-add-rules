@@ -165,10 +165,12 @@ function map_init() {
 }
 exports.map_init = map_init;
 function get_icon_res(name) {
-    name.split(".").forEach((value, index, array) => {
-        if (exports.MAP.has(value))
+    for (let value in name.split(".")) {
+        if (exports.MAP.has(value)) {
+            // @ts-ignore
             return exports.MAP.get(value);
-    });
+        }
+    }
     return -1;
 }
 exports.get_icon_res = get_icon_res;
@@ -342,7 +344,6 @@ function run() {
             }
         });
         core.info(new_count.toString());
-        console.log(icon_map_helper_1.MAP);
         (0, info_helper_1.info_write)(info_path, info[0], info[1] + new_count);
         // exit
         (0, database_helper_1.db_release)();

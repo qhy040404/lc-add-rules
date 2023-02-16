@@ -5,7 +5,7 @@ import * as fs from "fs-extra";
 import {GIT_LOG} from "./consts";
 import {db_init, db_release, exists, insert} from "./database-helper";
 import {execute} from "./exec-helper";
-import {get_icon_res, MAP, map_init} from "./icon-map-helper";
+import {get_icon_res, map_init} from "./icon-map-helper";
 import {info_serialize, info_write} from "./info-helper";
 import {rule} from "./json-obj";
 import {get_type} from "./lib-type-helper";
@@ -56,7 +56,6 @@ async function run() {
     })
 
     core.info(new_count.toString())
-    console.log(MAP)
     info_write(info_path, info[0], info[1] + new_count)
 
     // exit
