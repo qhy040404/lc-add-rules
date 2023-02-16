@@ -287,10 +287,13 @@ function run() {
         // inputs
         let db_path = (0, path_helper_1.serialize_path)(core.getInput("db_path"));
         let info_path = (0, path_helper_1.serialize_path)(core.getInput("info_path"));
+        core.info(`db_path: ${db_path}`);
+        core.info(`info_path: ${info_path}`);
         // init
         yield (0, icon_map_helper_1.map_init)();
         (0, database_helper_1.db_init)(db_path);
         let info = (0, info_helper_1.info_serialize)(info_path);
+        core.info(info.toString());
         let new_count = 0;
         // main
         let changelist = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
@@ -298,7 +301,6 @@ function run() {
         let list = changelist
             .filter((value, index, array) => regex.exec(value) != null)
             .filter((value, index, array) => !value.includes("regex"));
-        core.info(list.toString());
         list.forEach((value, index, array) => {
             let t = value.split("-libs/");
             let name = t[1].split(".json")[0];

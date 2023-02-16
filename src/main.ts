@@ -15,12 +15,15 @@ async function run() {
     // inputs
     let db_path = serialize_path(core.getInput("db_path"))
     let info_path = serialize_path(core.getInput("info_path"))
+    core.info(`db_path: ${db_path}`)
+    core.info(`info_path: ${info_path}`)
 
     // init
     await map_init()
     db_init(db_path)
 
     let info = info_serialize(info_path)
+    core.info(info.toString())
     let new_count = 0;
 
     // main
@@ -29,8 +32,6 @@ async function run() {
     let list = changelist
         .filter((value, index, array) => regex.exec(value) != null)
         .filter((value, index, array) => !value.includes("regex"))
-
-    core.info(list.toString())
 
     list.forEach((value, index, array) => {
         let t = value.split("-libs/")
