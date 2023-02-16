@@ -303,8 +303,10 @@ function run() {
                new id: ${(0, database_helper_1.insert)(name, data.label, type, (0, icon_map_helper_1.get_icon_res)(name))}
                name:${name}
                `);
+                new_count++;
             }
         });
+        (0, info_helper_1.info_write)(info_path, info[0], info[1] + new_count);
         // exit
         (0, database_helper_1.db_release)();
     });

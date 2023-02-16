@@ -3,7 +3,7 @@ import * as core from "@actions/core"
 import {db_init, db_release, insert, exists} from "./database-helper";
 import {execute} from "./exec-helper";
 import {GIT_LOG} from "./consts";
-import {info_serialize} from "./info-helper";
+import {info_serialize, info_write} from "./info-helper";
 import {get_type} from "./lib-type-helper";
 import {serialize_path} from "./path-helper";
 import * as fs from "fs-extra";
@@ -38,8 +38,11 @@ async function run() {
                name:${name}
                `
            )
+           new_count++
        }
     })
+
+    info_write(info_path, info[0], info[1]+new_count)
 
     // exit
     db_release()
