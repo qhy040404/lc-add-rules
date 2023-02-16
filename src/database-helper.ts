@@ -8,14 +8,13 @@ export function db_release() {
     sqlite.close()
 }
 
-export function insert(name: string, label: string, type: number, iconIndex: number) {
+export function insert(name: string, label: string, type: number, iconIndex: number): number {
     let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName) VALUES (null, ${name}, ${label}, ${type}, ${iconIndex}, 0, null)`
-    sqlite.run(insStr)
+    return sqlite.run(insStr)
 }
 
-export function select(name: string): boolean {
+export function exists(name: string): boolean {
     let selectStr = `SELECT * FROM rules_table WHERE name='${name}'`
     let rows = sqlite.run(selectStr)
-    console.log(rows)
     return rows != null
 }

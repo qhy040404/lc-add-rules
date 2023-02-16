@@ -1,6 +1,6 @@
 import {get_icon_res, map_init} from "./icon-map-helper";
 import * as core from "@actions/core"
-import {db_init, db_release, insert, select} from "./database-helper";
+import {db_init, db_release, insert, exists} from "./database-helper";
 import {execute} from "./exec-helper";
 import {GIT_LOG} from "./consts";
 import {info_serialize} from "./info-helper";
@@ -29,11 +29,15 @@ async function run() {
         let t = value.split("-libs/")
         let name = t[1].split(".json")[0]
 
-       if( select(name)) {
-
+       if(!exists(name)) {
            let type = get_type(t[0])
            let data = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
-           insert(name, data.label, type, get_icon_res(name))
+           core.info(
+               `
+               new id: ${insert(name, data.label, type, get_icon_res(name))}
+               name:${name}
+               `
+           )
        }
     })
 

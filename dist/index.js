@@ -20,7 +20,7 @@ exports.GIT_LOG = 'git log --pretty=format:"" --name-only -1';
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.select = exports.insert = exports.db_release = exports.db_init = void 0;
+exports.exists = exports.insert = exports.db_release = exports.db_init = void 0;
 const sqlite = __nccwpck_require__(4609);
 function db_init(path) {
     sqlite.connect(path);
@@ -32,16 +32,15 @@ function db_release() {
 exports.db_release = db_release;
 function insert(name, label, type, iconIndex) {
     let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName) VALUES (null, ${name}, ${label}, ${type}, ${iconIndex}, 0, null)`;
-    sqlite.run(insStr);
+    return sqlite.run(insStr);
 }
 exports.insert = insert;
-function select(name) {
+function exists(name) {
     let selectStr = `SELECT * FROM rules_table WHERE name='${name}'`;
     let rows = sqlite.run(selectStr);
-    console.log(rows);
     return rows != null;
 }
-exports.select = select;
+exports.exists = exists;
 
 
 /***/ }),
@@ -297,10 +296,13 @@ function run() {
         list.forEach((value, index, array) => {
             let t = value.split("-libs/");
             let name = t[1].split(".json")[0];
-            if ((0, database_helper_1.select)(name)) {
+            if (!(0, database_helper_1.exists)(name)) {
                 let type = (0, lib_type_helper_1.get_type)(t[0]);
                 let data = JSON.parse(fs.readFileSync((0, path_helper_1.serialize_path)(value), 'utf8'));
-                (0, database_helper_1.insert)(name, data.label, type, (0, icon_map_helper_1.get_icon_res)(name));
+                core.info(`
+               new id: ${(0, database_helper_1.insert)(name, data.label, type, (0, icon_map_helper_1.get_icon_res)(name))}
+               name:${name}
+               `);
             }
         });
         // exit
