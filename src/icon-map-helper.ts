@@ -1,5 +1,6 @@
 import {ICON_MAP_URL} from "./consts";
 import {http_get} from "./net-helper";
+import * as os from "os";
 
 export var MAP: Map<string, number> = new Map()
 
@@ -8,13 +9,13 @@ export async function map_init() {
     orig_map
         .split("put(-1, R.drawable.ic_sdk_placeholder)")[1]
         .split("}")[0]
-        .split("\n")
+        .split(os.EOL)
         .forEach((value, index, array) => {
             let p = value
                 .replace("put(", "")
                 .replace(")", "")
                 .replace("R.drawable.ic_lib_", "")
-                .split(",")
+                .split(", ")
             MAP.set(p[1], parseInt(p[0]))
         })
 }
