@@ -94,7 +94,6 @@ function execute(cmd) {
                 output += data.toString();
             }
         };
-        options.silent = true;
         yield exec.exec(cmd, undefined, options);
         return output.split("\n");
     });

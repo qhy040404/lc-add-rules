@@ -9,7 +9,6 @@ export async function execute(cmd: string): Promise<string[]> {
             output += data.toString();
         }
     }
-    options.silent = true
 
     await exec.exec(cmd, undefined, options)
     return output.split("\n")
