@@ -31,15 +31,12 @@ function db_release() {
 }
 exports.db_release = db_release;
 function insert(name, label, type, iconIndex) {
-    let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName)
-                  VALUES (null, ${name}, ${label}, ${type}, ${iconIndex}, 0, null)`;
+    let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName) VALUES (null, ${name}, ${label}, ${type}, ${iconIndex}, 0, null)`;
     return sqlite.run(insStr);
 }
 exports.insert = insert;
 function exists(name) {
-    let selectStr = `SELECT *
-                     FROM rules_table
-                     WHERE name = '${name}'`;
+    let selectStr = `SELECT * FROM rules_table WHERE name = '${name}'`;
     let rows = sqlite.run(selectStr);
     return rows != null;
 }
@@ -293,7 +290,7 @@ function run() {
         yield (0, icon_map_helper_1.map_init)();
         (0, database_helper_1.db_init)(db_path);
         let info = (0, info_helper_1.info_serialize)(info_path);
-        core.info(info.toString());
+        core.info(`info: ${info}`);
         let new_count = 0;
         // main
         let changelist = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
@@ -301,6 +298,7 @@ function run() {
         let list = changelist
             .filter((value, index, array) => regex.exec(value) != null)
             .filter((value, index, array) => !value.includes("regex"));
+        core.info(`list.length: ${list.length}`);
         list.forEach((value, index, array) => {
             let t = value.split("-libs/");
             let name = t[1].split(".json")[0];
@@ -308,10 +306,8 @@ function run() {
                 let type = (0, lib_type_helper_1.get_type)(t[0]);
                 let data = JSON.parse(fs.readFileSync((0, path_helper_1.serialize_path)(value), 'utf8'));
                 let t_label = data.label;
-                core.info(`
-               new id: ${(0, database_helper_1.insert)(name, t_label.substring(0, t_label.lastIndexOf("(")), type, (0, icon_map_helper_1.get_icon_res)(name))}
-               name:${name}
-               `);
+                core.info(`new id: ${(0, database_helper_1.insert)(name, t_label.substring(0, t_label.lastIndexOf("(")), type, (0, icon_map_helper_1.get_icon_res)(name))}`);
+                core.info(`name: ${name}`);
                 new_count++;
             }
         });
