@@ -9,7 +9,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.GIT_LOG = exports.ICON_MAP_URL = void 0;
 exports.ICON_MAP_URL = "https://raw.githubusercontent.com/LibChecker/LibChecker-Rules-Bundle/main/library/src/main/java/com/absinthe/rulesbundle/IconResMap.kt";
-exports.GIT_LOG = 'git log --pretty=format:"" --name-only master..HEAD';
+exports.GIT_LOG = 'git log --pretty=format:"" --name-only -3';
 
 
 /***/ }),
