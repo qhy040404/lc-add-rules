@@ -165,13 +165,15 @@ function map_init() {
 }
 exports.map_init = map_init;
 function get_icon_res(name) {
+    let res = -1;
     for (let value in name.split(".")) {
         if (exports.MAP.has(value)) {
             // @ts-ignore
-            return exports.MAP.get(value);
+            res = exports.MAP.get(value);
+            break;
         }
     }
-    return -1;
+    return res;
 }
 exports.get_icon_res = get_icon_res;
 

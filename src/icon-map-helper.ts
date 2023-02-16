@@ -21,11 +21,13 @@ export async function map_init() {
 }
 
 export function get_icon_res(name: string): number {
+    let res = -1
     for (let value in name.split(".")) {
         if (MAP.has(value)) {
             // @ts-ignore
-            return MAP.get(value)
+            res = MAP.get(value)
+            break
         }
     }
-    return -1
+    return res
 }
