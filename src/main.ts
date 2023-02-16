@@ -15,8 +15,9 @@ async function run() {
     db_init(db_path)
 
     // main
-    let list = await execute(GIT_LOG)
-    core.info(list)
+    let changelist = await execute(GIT_LOG)
+    let regex = /^.*-libs\/.*\.json$/
+    let list = changelist.filter((value, index, array) => regex.exec(value) != null)
 }
 
 async function cleanup() {

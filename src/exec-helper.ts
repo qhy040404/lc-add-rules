@@ -1,6 +1,6 @@
 import * as exec from '@actions/exec'
 
-export async function execute(cmd:string): Promise<string> {
+export async function execute(cmd:string): Promise<string[]> {
     let output = ""
 
     const options:exec.ExecOptions = {}
@@ -11,5 +11,5 @@ export async function execute(cmd:string): Promise<string> {
     };
 
     await exec.exec(cmd, undefined,options)
-    return output
+    return output.split("\n")
 }

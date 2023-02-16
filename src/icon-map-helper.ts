@@ -9,7 +9,7 @@ export async function map_init() {
         .split("put(-1, R.drawable.ic_sdk_placeholder)")[1]
         .split("}")[0]
         .split("\n")
-        .forEach(function (value, index, array) {
+        .forEach((value, index, array) => {
             let p = value
                 .replace("put(","")
                 .replace(")","")

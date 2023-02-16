@@ -94,7 +94,7 @@ function execute(cmd) {
             }
         };
         yield exec.exec(cmd, undefined, options);
-        return output;
+        return output.split("\n");
     });
 }
 exports.execute = execute;
@@ -128,7 +128,7 @@ function map_init() {
             .split("put(-1, R.drawable.ic_sdk_placeholder)")[1]
             .split("}")[0]
             .split("\n")
-            .forEach(function (value, index, array) {
+            .forEach((value, index, array) => {
             let p = value
                 .replace("put(", "")
                 .replace(")", "")
@@ -196,8 +196,9 @@ function run() {
         yield (0, icon_map_helper_1.map_init)();
         (0, database_helper_1.db_init)(db_path);
         // main
-        let list = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
-        core.info(list);
+        let changelist = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
+        let regex = /^.*-libs\/.*\.json$/;
+        let list = changelist.filter((value, index, array) => regex.exec(value) != null);
     });
 }
 function cleanup() {
