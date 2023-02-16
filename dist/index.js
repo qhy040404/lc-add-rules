@@ -31,12 +31,15 @@ function db_release() {
 }
 exports.db_release = db_release;
 function insert(name, label, type, iconIndex) {
-    let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName) VALUES (null, ${name}, ${label}, ${type}, ${iconIndex}, 0, null)`;
+    let insStr = `INSERT INTO rules_table (_id, name, label, type, iconIndex, isRegexRule, regexName)
+                  VALUES (null, ${name}, ${label}, ${type}, ${iconIndex}, 0, null)`;
     return sqlite.run(insStr);
 }
 exports.insert = insert;
 function exists(name) {
-    let selectStr = `SELECT * FROM rules_table WHERE name='${name}'`;
+    let selectStr = `SELECT *
+                     FROM rules_table
+                     WHERE name = '${name}'`;
     let rows = sqlite.run(selectStr);
     return rows != null;
 }
@@ -120,8 +123,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.get_icon_res = exports.map_init = exports.MAP = void 0;
-const net_helper_1 = __nccwpck_require__(4930);
 const consts_1 = __nccwpck_require__(4831);
+const net_helper_1 = __nccwpck_require__(4930);
 exports.MAP = new Map();
 function map_init() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -270,15 +273,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const icon_map_helper_1 = __nccwpck_require__(8959);
 const core = __importStar(__nccwpck_require__(2186));
+const fs = __importStar(__nccwpck_require__(5630));
+const consts_1 = __nccwpck_require__(4831);
 const database_helper_1 = __nccwpck_require__(9348);
 const exec_helper_1 = __nccwpck_require__(3422);
-const consts_1 = __nccwpck_require__(4831);
+const icon_map_helper_1 = __nccwpck_require__(8959);
 const info_helper_1 = __nccwpck_require__(5413);
 const lib_type_helper_1 = __nccwpck_require__(1271);
 const path_helper_1 = __nccwpck_require__(8184);
-const fs = __importStar(__nccwpck_require__(5630));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         // inputs
@@ -356,8 +359,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.http_get = void 0;
-const http = __importStar(__nccwpck_require__(6255));
 const core = __importStar(__nccwpck_require__(2186));
+const http = __importStar(__nccwpck_require__(6255));
 const client = new http.HttpClient('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36');
 function http_get(url) {
     return __awaiter(this, void 0, void 0, function* () {

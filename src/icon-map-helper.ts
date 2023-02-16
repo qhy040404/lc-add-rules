@@ -1,5 +1,5 @@
-import {http_get} from "./net-helper";
 import {ICON_MAP_URL} from "./consts";
+import {http_get} from "./net-helper";
 
 export var MAP: Map<string, number> = new Map()
 
@@ -11,15 +11,15 @@ export async function map_init() {
         .split("\n")
         .forEach((value, index, array) => {
             let p = value
-                .replace("put(","")
-                .replace(")","")
-                .replace("R.drawable.ic_lib_","")
+                .replace("put(", "")
+                .replace(")", "")
+                .replace("R.drawable.ic_lib_", "")
                 .split(",")
-            MAP.set(p[1],parseInt(p[0]))
+            MAP.set(p[1], parseInt(p[0]))
         })
 }
 
-export function get_icon_res(name:string): number {
+export function get_icon_res(name: string): number {
     name.split(".").forEach((value, index, array) => {
         if (MAP.has(value)) return MAP.get(value)
     })

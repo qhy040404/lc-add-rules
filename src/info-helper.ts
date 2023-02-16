@@ -1,12 +1,12 @@
 import * as fs from 'fs-extra'
 
-export function info_serialize(path:string): number[] {
+export function info_serialize(path: string): number[] {
     let data = fs.readFileSync(path, 'utf8')
     let json = JSON.parse(data)
     return [json.version, json.count]
 }
 
-export function info_write(path:string, version:number, count:number) {
+export function info_write(path: string, version: number, count: number) {
     let json = {
         "version": version,
         "count": count

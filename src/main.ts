@@ -1,12 +1,14 @@
-import {get_icon_res, map_init} from "./icon-map-helper";
 import * as core from "@actions/core"
-import {db_init, db_release, insert, exists} from "./database-helper";
-import {execute} from "./exec-helper";
+
+import * as fs from "fs-extra";
+
 import {GIT_LOG} from "./consts";
+import {db_init, db_release, exists, insert} from "./database-helper";
+import {execute} from "./exec-helper";
+import {get_icon_res, map_init} from "./icon-map-helper";
 import {info_serialize, info_write} from "./info-helper";
 import {get_type} from "./lib-type-helper";
 import {serialize_path} from "./path-helper";
-import * as fs from "fs-extra";
 
 async function run() {
     // inputs
@@ -29,20 +31,20 @@ async function run() {
         let t = value.split("-libs/")
         let name = t[1].split(".json")[0]
 
-       if(!exists(name)) {
-           let type = get_type(t[0])
-           let data = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
-           core.info(
-               `
+        if (!exists(name)) {
+            let type = get_type(t[0])
+            let data = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
+            core.info(
+                `
                new id: ${insert(name, data.label, type, get_icon_res(name))}
                name:${name}
                `
-           )
-           new_count++
-       }
+            )
+            new_count++
+        }
     })
 
-    info_write(info_path, info[0], info[1]+new_count)
+    info_write(info_path, info[0], info[1] + new_count)
 
     // exit
     db_release()
