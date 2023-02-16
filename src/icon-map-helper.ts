@@ -20,14 +20,11 @@ export async function map_init() {
         })
 }
 
-export function get_icon_res(name: string): number {
+export function get_icon_res(team: string): number {
     let res = -1
-    for (let value in name.split(".")) {
-        if (MAP.has(value)) {
-            // @ts-ignore
-            res = MAP.get(value)
-            break
-        }
+    if (MAP.has(team)) {
+        // @ts-ignore
+        res = MAP.get(team)
     }
     return res
 }

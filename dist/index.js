@@ -164,14 +164,11 @@ function map_init() {
     });
 }
 exports.map_init = map_init;
-function get_icon_res(name) {
+function get_icon_res(team) {
     let res = -1;
-    for (let value in name.split(".")) {
-        if (exports.MAP.has(value)) {
-            // @ts-ignore
-            res = exports.MAP.get(value);
-            break;
-        }
+    if (exports.MAP.has(team)) {
+        // @ts-ignore
+        res = exports.MAP.get(team);
     }
     return res;
 }
@@ -340,7 +337,7 @@ function run() {
                 else {
                     label = t_label;
                 }
-                core.info(`new id: ${(0, database_helper_1.insert)(name, label, type, (0, icon_map_helper_1.get_icon_res)(name))}`);
+                core.info(`new id: ${(0, database_helper_1.insert)(name, label, type, (0, icon_map_helper_1.get_icon_res)(data.team.toLowerCase()))}`);
                 core.info(`name: ${name}`);
                 new_count++;
             }

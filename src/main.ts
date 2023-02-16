@@ -49,7 +49,7 @@ async function run() {
             } else  {
                 label = t_label
             }
-            core.info(`new id: ${insert(name, label, type, get_icon_res(name))}`)
+            core.info(`new id: ${insert(name, label, type, get_icon_res(data.team.toLowerCase()))}`)
             core.info(`name: ${name}`)
             new_count++
         }
