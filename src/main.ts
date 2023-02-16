@@ -43,7 +43,13 @@ async function run() {
             let type = get_type(t[0])
             let data: rule = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
             let t_label = data.label
-            core.info(`new id: ${insert(name, t_label.substring(0, t_label.lastIndexOf("(")), type, get_icon_res(name))}`)
+            let label: string
+            if (t_label.includes("(")) {
+                label = t_label.substring(0, t_label.lastIndexOf("("))
+            } else  {
+                label = t_label
+            }
+            core.info(`new id: ${insert(name, label, type, get_icon_res(name))}`)
             core.info(`name: ${name}`)
             new_count++
         }

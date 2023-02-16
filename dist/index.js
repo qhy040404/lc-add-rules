@@ -305,7 +305,14 @@ function run() {
                 let type = (0, lib_type_helper_1.get_type)(t[0]);
                 let data = JSON.parse(fs.readFileSync((0, path_helper_1.serialize_path)(value), 'utf8'));
                 let t_label = data.label;
-                core.info(`new id: ${(0, database_helper_1.insert)(name, t_label.substring(0, t_label.lastIndexOf("(")), type, (0, icon_map_helper_1.get_icon_res)(name))}`);
+                let label;
+                if (t_label.includes("(")) {
+                    label = t_label.substring(0, t_label.lastIndexOf("("));
+                }
+                else {
+                    label = t_label;
+                }
+                core.info(`new id: ${(0, database_helper_1.insert)(name, label, type, (0, icon_map_helper_1.get_icon_res)(name))}`);
                 core.info(`name: ${name}`);
                 new_count++;
             }
