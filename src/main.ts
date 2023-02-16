@@ -25,7 +25,9 @@ async function run() {
     // main
     let changelist = await execute(GIT_LOG)
     let regex = /^.*-libs\/.*\.json$/
-    let list = changelist.filter((value, index, array) => regex.exec(value) != null)
+    let list = changelist
+        .filter((value, index, array) => regex.exec(value) != null)
+        .filter((value, index, array) => !value.includes("regex"))
 
     list.forEach((value, index, array) => {
         let t = value.split("-libs/")
