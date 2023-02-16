@@ -9,7 +9,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.GIT_LOG = exports.ICON_MAP_URL = void 0;
 exports.ICON_MAP_URL = "https://raw.githubusercontent.com/LibChecker/LibChecker-Rules-Bundle/main/library/src/main/java/com/absinthe/rulesbundle/IconResMap.kt";
-exports.GIT_LOG = 'git log --pretty=format:"" --name-only -1';
+exports.GIT_LOG = 'git log --pretty=format:"" --name-only -3';
 
 
 /***/ }),
@@ -295,7 +295,9 @@ function run() {
         // main
         let changelist = yield (0, exec_helper_1.execute)(consts_1.GIT_LOG);
         let regex = /^.*-libs\/.*\.json$/;
-        let list = changelist.filter((value, index, array) => regex.exec(value) != null);
+        let list = changelist
+            .filter((value, index, array) => regex.exec(value) != null)
+            .filter((value, index, array) => !value.includes("regex"));
         list.forEach((value, index, array) => {
             let t = value.split("-libs/");
             let name = t[1].split(".json")[0];
