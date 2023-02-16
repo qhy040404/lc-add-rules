@@ -7,9 +7,9 @@ import {db_init, db_release, exists, insert} from "./database-helper";
 import {execute} from "./exec-helper";
 import {get_icon_res, map_init} from "./icon-map-helper";
 import {info_serialize, info_write} from "./info-helper";
+import {rule} from "./json-obj";
 import {get_type} from "./lib-type-helper";
 import {serialize_path} from "./path-helper";
-import {rule} from "./json-obj";
 
 async function run() {
     // inputs
