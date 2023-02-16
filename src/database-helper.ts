@@ -13,7 +13,9 @@ export function insert(name: string, label: string, type: number, iconIndex: num
     sqlite.run(insStr)
 }
 
-export function select(name: string) {
+export function select(name: string): boolean {
     let selectStr = `SELECT * FROM rules_table WHERE name='${name}'`
     let rows = sqlite.run(selectStr)
+    console.log(rows)
+    return rows != null
 }
