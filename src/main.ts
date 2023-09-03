@@ -39,23 +39,28 @@ async function run() {
         let t = value.split("-libs/")
         let name = t[1].split(".json")[0]
 
-        if (!exists(name)) {
-            let type = get_type(t[0])
-            let data: rule = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
-            let t_label = data.label
-            let label: string
-            if (t_label.includes("(")) {
-                label = t_label.substring(0, t_label.lastIndexOf("("))
-            } else  {
-                label = t_label
+        try {
+            if (!exists(name)) {
+                let type = get_type(t[0])
+                let data: rule = JSON.parse(fs.readFileSync(serialize_path(value), 'utf8'))
+                let t_label = data.label
+                let label: string
+                if (t_label.includes("(")) {
+                    label = t_label.substring(0, t_label.lastIndexOf("("))
+                } else {
+                    label = t_label
+                }
+                core.info(`new id: ${insert(name, label, type, get_icon_res(data.team.toLowerCase()))}`)
+                core.info(`name: ${name}`)
+                new_count++
             }
-            core.info(`new id: ${insert(name, label, type, get_icon_res(data.team.toLowerCase()))}`)
-            core.info(`name: ${name}`)
-            new_count++
+        } catch (e) {
+            // @ts-ignore
+            core.warning(e)
         }
     })
 
-    core.info(new_count.toString())
+    core.info(`Count of new items: ${new_count}`)
     info_write(info_path, info[0], info[1] + new_count)
 
     // exit
