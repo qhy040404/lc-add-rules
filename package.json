@@ -1,7 +1,7 @@
 {
   "name": "lc-add-rules",
   "description": "A GitHub action to add rules to database",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LibChecker/lc-add-rules.git"

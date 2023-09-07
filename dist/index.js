@@ -326,23 +326,29 @@ function run() {
         list.forEach((value, index, array) => {
             let t = value.split("-libs/");
             let name = t[1].split(".json")[0];
-            if (!(0, database_helper_1.exists)(name)) {
-                let type = (0, lib_type_helper_1.get_type)(t[0]);
-                let data = JSON.parse(fs.readFileSync((0, path_helper_1.serialize_path)(value), 'utf8'));
-                let t_label = data.label;
-                let label;
-                if (t_label.includes("(")) {
-                    label = t_label.substring(0, t_label.lastIndexOf("("));
+            try {
+                if (!(0, database_helper_1.exists)(name)) {
+                    let type = (0, lib_type_helper_1.get_type)(t[0]);
+                    let data = JSON.parse(fs.readFileSync((0, path_helper_1.serialize_path)(value), 'utf8'));
+                    let t_label = data.label;
+                    let label;
+                    if (t_label.includes("(")) {
+                        label = t_label.substring(0, t_label.lastIndexOf("("));
+                    }
+                    else {
+                        label = t_label;
+                    }
+                    core.info(`new id: ${(0, database_helper_1.insert)(name, label, type, (0, icon_map_helper_1.get_icon_res)(data.team.toLowerCase()))}`);
+                    core.info(`name: ${name}`);
+                    new_count++;
                 }
-                else {
-                    label = t_label;
-                }
-                core.info(`new id: ${(0, database_helper_1.insert)(name, label, type, (0, icon_map_helper_1.get_icon_res)(data.team.toLowerCase()))}`);
-                core.info(`name: ${name}`);
-                new_count++;
+            }
+            catch (e) {
+                // @ts-ignore
+                core.warning(e);
             }
         });
-        core.info(new_count.toString());
+        core.info(`Count of new items: ${new_count}`);
         (0, info_helper_1.info_write)(info_path, info[0], info[1] + new_count);
         // exit
         (0, database_helper_1.db_release)();
@@ -2371,6 +2377,19 @@ class HttpClientResponse {
             }));
         });
     }
+    readBodyBuffer() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                const chunks = [];
+                this.message.on('data', (chunk) => {
+                    chunks.push(chunk);
+                });
+                this.message.on('end', () => {
+                    resolve(Buffer.concat(chunks));
+                });
+            }));
+        });
+    }
 }
 exports.HttpClientResponse = HttpClientResponse;
 function isHttps(requestUrl) {
@@ -2875,7 +2894,13 @@ function getProxyUrl(reqUrl) {
         }
     })();
     if (proxyVar) {
-        return new URL(proxyVar);
+        try {
+            return new URL(proxyVar);
+        }
+        catch (_a) {
+            if (!proxyVar.startsWith('http://') && !proxyVar.startsWith('https://'))
+                return new URL(`http://${proxyVar}`);
+        }
     }
     else {
         return undefined;
@@ -2885,6 +2910,10 @@ exports.getProxyUrl = getProxyUrl;
 function checkBypass(reqUrl) {
     if (!reqUrl.hostname) {
         return false;
+    }
+    const reqHost = reqUrl.hostname;
+    if (isLoopbackAddress(reqHost)) {
+        return true;
     }
     const noProxy = process.env['no_proxy'] || process.env['NO_PROXY'] || '';
     if (!noProxy) {
@@ -2911,13 +2940,24 @@ function checkBypass(reqUrl) {
         .split(',')
         .map(x => x.trim().toUpperCase())
         .filter(x => x)) {
-        if (upperReqHosts.some(x => x === upperNoProxyItem)) {
+        if (upperNoProxyItem === '*' ||
+            upperReqHosts.some(x => x === upperNoProxyItem ||
+                x.endsWith(`.${upperNoProxyItem}`) ||
+                (upperNoProxyItem.startsWith('.') &&
+                    x.endsWith(`${upperNoProxyItem}`)))) {
             return true;
         }
     }
     return false;
 }
 exports.checkBypass = checkBypass;
+function isLoopbackAddress(host) {
+    const hostLower = host.toLowerCase();
+    return (hostLower === 'localhost' ||
+        hostLower.startsWith('127.') ||
+        hostLower.startsWith('[::1]') ||
+        hostLower.startsWith('[0:0:0:0:0:0:0:1]'));
+}
 //# sourceMappingURL=proxy.js.map
 
 /***/ }),
@@ -4754,7 +4794,8 @@ function rename (src, dest, overwrite) {
 function moveAcrossDevice (src, dest, overwrite) {
   const opts = {
     overwrite,
-    errorOnExist: true
+    errorOnExist: true,
+    preserveTimestamps: true
   }
   copySync(src, dest, opts)
   return removeSync(src)
@@ -4835,7 +4876,8 @@ function rename (src, dest, overwrite, cb) {
 function moveAcrossDevice (src, dest, overwrite, cb) {
   const opts = {
     overwrite,
-    errorOnExist: true
+    errorOnExist: true,
+    preserveTimestamps: true
   }
   copy(src, dest, opts, err => {
     if (err) return cb(err)
