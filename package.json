@@ -20,7 +20,7 @@
     "sqlite3": "5.1.7"
   },
   "devDependencies": {
-    "@types/node": "18.19.8",
+    "@types/node": "18.19.17",
     "@vercel/ncc": "0.38.1",
     "fs-extra": "11.2.0",
     "typescript": "5.3.3"
